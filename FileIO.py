@@ -132,6 +132,7 @@ def write_txyz(n_atoms, coordinates, connectivity, periodic_table, atom_types):
             
             except KeyError as kerr:
                 print(f">ERROR: check .EIn file! can't find atomic number {coordinates[idx][0]} in Periodictable.py")
+                print(f"or atomtype {coordinates[idx][5]} in MM force field file")
                 abnormal_termination()
             except(IndexError, ValueError) as ierr:
                 print(">ERROR: Check .EIn file - something wrong in coordinates extracted from .EIn")
