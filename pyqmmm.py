@@ -21,7 +21,7 @@ if fix_ein_path:
 
 
 # 2. read gaussian .EIn file
-print(">Reading Gaussian file ...")
+print(">Reading Gaussian .EIn file ...")
 data = fio.read_file(f"{gaussian_ein}")
 n_atoms, coordinates, connectivity, eOu_setting = fio.clean_ein(data)
 # fio.remove_files([f"{gaussian_ein}"])
