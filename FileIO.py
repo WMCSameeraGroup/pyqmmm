@@ -54,10 +54,21 @@ def clean_ein(data):
     # connectivity data -> line [(nAtoms+1):(nAtoms+1)+(nAtoms+1)]
     connectivity = []
 
-    # extract coordinates
-    for line in data[1:(nAtoms+1)]:
-        coordinates.append(line.split())
+    # extract coordinates. Line e.g.
+    try:
+        for line in data[1:(nAtoms+1)]:
+            coordinates_line_split = line.split()
+            if len(coordinates_line_split) == 6:
+                coordinates.append(coordinates_line_split)
+            else:
+                raise ValueError
+        
+    except ValueError as error:
+        print(">Error in Gaussian .EIn file")
+        print(f"in line: {line}")
+        abnormal_termination()        
 
+    # extract connectivity
     for line in data[(nAtoms+1):(nAtoms+1)+(nAtoms+1)]:
         connectivity.append(line.split())
 
@@ -134,9 +145,6 @@ def write_txyz(n_atoms, coordinates, connectivity, periodic_table, atom_types):
                 print(f">ERROR: check .EIn file! can't find atomic number {coordinates[idx][0]} in Periodictable.py")
                 print(f"or atomtype {coordinates[idx][5]} in MM force field file")
                 abnormal_termination()
-            except(IndexError, ValueError) as ierr:
-                print(">ERROR: Check .EIn file - something wrong in coordinates extracted from .EIn")
-                abnormal_termination()
 
             row = " {:d} {:3} {:14.8f} {:14.8f} {:14.8f} {:4}  {} \n".format(
                 column1, column2, column3, column4, column5, column6, column7)
@@ -185,9 +193,18 @@ def execute_tinker(command, out_file):
             process = subprocess.Popen(shell_arguments, stdout=fout)
             process_output, process_error = process.communicate(timeout=TINKER_TIMEOUT)
             process_status = process.wait()
-    except(OSError, ValueError) as error:
-        print("ERROR: Can't find Tinker executables or input files! \nExiting...")
+    except OSError as error:
+        print(">ERROR in Tinker calculation")
+        print("can't find executables. Add then in to PATH or specify in the .key file ")
+        print("to identify the problem")
         abnormal_termination()
+        
+    except ValueError as error:
+        print(">ERROR in Tinker calculation")
+        print("check *.epout  *.gout  *.hes  *.hesout *.xyz files in the working directory")
+        print("to identify the problem")
+        abnormal_termination()
+        
     except(subprocess.TimeoutExpired) as error:
         print(f"ERROR: Tinker took too long (>{TINKER_TIMEOUT} sec) to process! Terminating...")
         print("probable reason: Tinker might not be able to find forcefield parameters. Check")
