@@ -4,6 +4,8 @@ import sys, os
 import FileIO as fio
 from Periodictable import periodic_table
 
+print("pyQMMM: Recovering MM data...")
+
 # 1. prepare the environment
 # get system variables
 script_path = os.path.dirname(sys.argv[0])
@@ -21,14 +23,14 @@ if fix_ein_path:
 
 
 # 2. read gaussian .EIn file
-print(">Reading Gaussian .EIn file ...")
+# print(">Reading Gaussian .EIn file ...")
 data = fio.read_file(f"{gaussian_ein}")
 n_atoms, coordinates, connectivity, eOu_setting = fio.clean_ein(data)
 # fio.remove_files([f"{gaussian_ein}"])
 
 
 # 3. generate tinker file
-print(">Generating Tinker file ...")
+# print(">Generating Tinker file ...")
 # periodic_table = fio.create_periodic_table(f"{script_path}/periodic_table.dat")   
 atom_types = fio.read_atom_types(f"{cwd}/atomtypes.dat")
 
@@ -36,14 +38,14 @@ fio.write_txyz(n_atoms, coordinates, connectivity, periodic_table=periodic_table
 
 
 # 4. run tinker
-print(">Running Tinker ...")
+# print(">Running Tinker ...")
 # forcefield = fio.extract_forcefield()
 fio.run_tinker(eOu_setting=eOu_setting, tinker_path=tinker_path)
 
 
 # 5. construct gaussian Eou file
 gradients, dderivatives, ghes = None, None, None
-print(">Generating Gaussian Eou ...")
+# print(">Generating Gaussian Eou ...")
 
 if eOu_setting >= 0:
     energy, dipole = fio.process_tinker_epout("input")
@@ -63,7 +65,7 @@ fio.write_gauEou(g16_scratch=g16_scratch, eOu_setting=eOu_setting, filename=gaus
                  gradients=gradients, dipole_derivatives=dderivatives, 
                  gaussian_hessian=ghes)
 
-print(">Done! \n")
+print("pyQMMM: Data recovery completed! \n")
 
 
 # 6. remove temporary files and the EIn file

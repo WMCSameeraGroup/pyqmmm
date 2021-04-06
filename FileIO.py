@@ -288,15 +288,15 @@ def process_tinker_epout(input_filename="input"):
     # *line=" Total Potential Energy :   5.9172 Kcal/mole"
     for line in data_tinker_epout:
         if line.startswith(" Total Potential Energy :"):
-            print("Extracting MM Energy:")
-            print(line)
+            # print("Extracting MM Energy:")
+            # print(line)
             energy = float(line.split()[4]) * KCALPERMOL2HARTREE
     
     # extract dipole
     # *line=" Dipole X,Y,Z-Components :   0.000   0.000   0.000"
         if line.startswith(" Dipole X,Y,Z-Components :"):
-            print("Extracting MM Dipole:")
-            print(line)
+            # print("Extracting MM Dipole:")
+            # print(line)
             line_split= line.split()
             dx = float(line_split[3]) * DEBYE2BOHRELEC
             dy = float(line_split[4]) * DEBYE2BOHRELEC
@@ -332,19 +332,18 @@ def process_tinker_gout(input_filename, n_atoms):
     """
     for idx, line in enumerate(data_tinker_gout):
         if line.startswith("  Type      Atom              dE/dX"):
-            print("Extracting MM Gradient:")
-            print(idx, line)
+            # print("Extracting MM Gradient:")
+            # print(idx, line)
             line_index = idx
             break
     try:
         st =  line_index+2 ; ed = st +  n_atoms
     except:
         print(f"Can't find cartesian gradient breakdown in the {input_filename}.gout file")
-        print('Terminating ...')
         abnormal_termination()
         
     for line in range(st,ed):
-        print(line, data_tinker_gout[line])
+        # print(line, data_tinker_gout[line])
         data_gradient_split = data_tinker_gout[line].split()
         dEdx = float(data_gradient_split[2]) * KCALPERMOLANG2HARTREEBHOR
         dEdy = float(data_gradient_split[3]) * KCALPERMOLANG2HARTREEBHOR
@@ -445,7 +444,7 @@ def extract_hessian(filename):
     Args:
         filename (str): Tinker hessian output file name E.g. inp.hes
     """    
-    print("Extracting Hessian...")
+    # print("Extracting Hessian...")
     
     tinker_hessian = []
     hessian_data = read_file(filename) 
@@ -454,16 +453,16 @@ def extract_hessian(filename):
     for idx, line in enumerate(iter_hes_data):
         row = []
         if "H" in line:
-            print(idx, line)
+            # print(idx, line)
             # extract hes data rows
             hes_idx = idx+2
             try:
                 while not hessian_data[hes_idx] == "":
-                    print(f"({hes_idx}) {hessian_data[hes_idx]}")
+                    # print(f"({hes_idx}) {hessian_data[hes_idx]}")
                     row.extend(hessian_data[hes_idx].split())
                     hes_idx += 1
             except IndexError as idx_error:
-                print("Reached to the end...")
+                # print("Reached to the end...")
                 pass
             # print(f"idx={idx}, hes_idx={hes_idx}")
             tinker_hessian.append(row)
@@ -576,7 +575,7 @@ def write_gauEou(g16_scratch, eOu_setting, filename, natoms, energy, dipole, gra
     # write new *.EOu file
     with open(f"{filename}.EOu", "w") as fout:
         # write gaussian file
-        print(f">Writing {filename}.EOu")
+        # print(f">Writing {filename}.EOu")
         
         if eOu_setting >= 0:
             # 1. energy, dipole-moment (xyz)
