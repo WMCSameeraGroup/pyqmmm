@@ -7,8 +7,8 @@
 # USAGE: sh fix_ice.sh FILENAME.EIn
 
 # Make a copy of .EIn file to a backup folder
-#FNAME=`echo "$1" | awk -F'/' '{print $NF}'`
-#cp $1 /home/b/b32708/s1s12_amoeba/ein/${FNAME}
+FNAME=`echo "$1" | awk -F'/' '{print $NF}'`
+cp $1 /home/b/b32708/s1s12_amoeba/ein/${FNAME}
 
 # Remove partial connectivity from .EIn file (sed skips coordination section)
 EIN = $1
