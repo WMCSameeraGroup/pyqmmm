@@ -65,7 +65,7 @@ fio.write_gauEou(g16_scratch=g16_scratch, eOu_setting=eOu_setting, filename=gaus
                  gradients=gradients, dipole_derivatives=dderivatives, 
                  gaussian_hessian=ghes)
 
-print("pyQMMM: Data recovery completed! \n")
+print("pyQMMM: Data recovery completed!")
 
 
 # 6. remove temporary files and the EIn file
