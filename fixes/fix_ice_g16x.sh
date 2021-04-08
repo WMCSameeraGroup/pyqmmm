@@ -13,4 +13,4 @@
 # Remove partial connectivity from .EIn file (sed skips coordination section)
 EIN = $1
 NATOMS=`awk 'NR==1{print $1}' ${EIN}`
-sed -E "1,${NATOMS}b;s/\s+[0-9]+\s+0.100//g" ${EIN}
+sed -i -E "1,${NATOMS}b;s/\s+[0-9]+\s+0.100//g" ${EIN}
