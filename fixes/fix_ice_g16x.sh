@@ -11,6 +11,6 @@ FNAME=`echo "$1" | awk -F'/' '{print $NF}'`
 cp $1 /home/b/b32708/s1s12_amoeba/ein/${FNAME}
 
 # Remove partial connectivity from .EIn file (sed skips coordination section)
-EIN = $1
+EIN=$1
 NATOMS=`awk 'NR==1{print $1}' ${EIN}`
 sed -i -E "1,${NATOMS}b;s/\s+[0-9]+\s+0.100//g" ${EIN}
