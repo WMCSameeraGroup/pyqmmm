@@ -159,7 +159,7 @@ def sh(command, timeout=120):
         command (str): shell command to execute
     """
     shell_arguments = shlex.split(command)
-    print(">Running a quick fix...")
+    # print(">Running a quick fix...")
     try:
         process = subprocess.Popen(shell_arguments, stdout=subprocess.PIPE, 
                                    stderr=subprocess.PIPE,
@@ -406,7 +406,7 @@ def remove_files(files, location):
         
     for file in rm_files_list:
         os.remove(file) 
-    print(f"{len(rm_files_list)} File(s) removed from {location}")
+    # print(f"{len(rm_files_list)} File(s) removed from {location}")
 
 
 
