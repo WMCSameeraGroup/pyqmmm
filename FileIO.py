@@ -76,6 +76,16 @@ def clean_ein(data):
 
 
 def pop_item(search_term, _list):
+    """search a string and delete it and the one before it.
+    used to remove partial connectivity in the connectivity matrix
+
+    Args:
+        search_term (str): search term 
+        _list (list): list to remove items
+
+    Returns:
+        None: modifies the list in-place
+    """
     for index, item in enumerate(_list):
         if search_term == item:
             _list.pop(index)
@@ -84,6 +94,15 @@ def pop_item(search_term, _list):
     return None
 
 def clean_connectivity(data, search_term="0.100"):
+    """modifies the connectivity data. removes partial connectivity
+
+    Args:
+        data (nested list): extracted list of connectivity data (from *.EIn)
+        search_term (str, optional): partial connectivity value. Defaults to "0.100".
+
+    Returns:
+        None: modifies the connectivity data (nested list) in-place
+    """
     for item in data:
         if search_term in item:
             pop_item(search_term, item)
