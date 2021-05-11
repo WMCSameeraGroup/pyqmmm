@@ -29,7 +29,6 @@ n_atoms, coordinates, connectivity, eOu_setting = fio.clean_ein(data)
 
 connectivity_cleaned = copy.deepcopy(connectivity)
 fio.clean_connectivity(connectivity_cleaned)
-fio.clean_connectivity(connectivity_cleaned)
 # fio.remove_files([f"{gaussian_ein}"])
 
 
