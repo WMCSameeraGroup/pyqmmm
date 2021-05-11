@@ -75,6 +75,22 @@ def clean_ein(data):
     return(nAtoms, coordinates, connectivity, eOu_setting)
 
 
+def pop_item(search_term, _list):
+    for index, item in enumerate(_list):
+        if search_term == item:
+            _list.pop(index)
+            _list.pop(index-1)
+            
+    return None
+
+def clean_connectivity(data, search_term="0.100"):
+    for item in data:
+        if search_term in item:
+            pop_item(search_term, item)
+    
+    return None
+
+
 def read_atom_types(file_name):
     """(str -> nested list)
     Create atom types dic from a .dat file
