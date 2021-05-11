@@ -2,7 +2,6 @@
 
 import sys, os
 import FileIO as fio
-from copy import deepcopy
 from Periodictable import periodic_table
 
 print("pyQMMM: Recovering MM data...")
