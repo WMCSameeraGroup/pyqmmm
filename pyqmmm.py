@@ -2,6 +2,7 @@
 
 import sys, os
 import FileIO as fio
+from copy import deepcopy
 from Periodictable import periodic_table
 
 print("pyQMMM: Recovering MM data...")
@@ -26,7 +27,8 @@ if fix_ein_path:
 # print(">Reading Gaussian .EIn file ...")
 data = fio.read_file(f"{gaussian_ein}")
 n_atoms, coordinates, connectivity, eOu_setting = fio.clean_ein(data)
-connectivity_cleaned = fio.clean_connectivity(connectivity)
+connectivity_cleaned = deepcopy(connectivity)
+fio.clean_connectivity(connectivity)
 # fio.remove_files([f"{gaussian_ein}"])
 
 
