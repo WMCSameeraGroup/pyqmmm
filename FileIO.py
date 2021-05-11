@@ -86,10 +86,15 @@ def pop_item(search_term, _list):
     Returns:
         None: modifies the list in-place
     """
+    rm_list = []
     for index, item in enumerate(_list):
         if search_term == item:
-            _list.pop(index)
-            _list.pop(index-1)
+            rm_list.append(index)
+        
+    rm_list.reverse()    
+    for rm_index in rm_list:
+        _list.pop(rm_index)
+        _list.pop(rm_index-1)
             
     return None
 
