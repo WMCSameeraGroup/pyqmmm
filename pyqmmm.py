@@ -27,6 +27,7 @@ if fix_ein_path:
 data = fio.read_file(f"{gaussian_ein}")
 n_atoms, coordinates, connectivity, eOu_setting = fio.clean_ein(data)
 
+# remove partial connectivity from tinker connectivity data
 connectivity_cleaned = copy.deepcopy(connectivity)
 fio.clean_connectivity(connectivity_cleaned)
 # fio.remove_files([f"{gaussian_ein}"])

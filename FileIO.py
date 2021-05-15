@@ -90,11 +90,14 @@ def pop_item(search_term, _list):
     for index, item in enumerate(_list):
         if search_term == item:
             rm_list.append(index)
-        
-    rm_list.reverse()    
-    for rm_index in rm_list:
-        _list.pop(rm_index)
-        _list.pop(rm_index-1)
+    
+    if rm_list:  
+    # start to delete from reverse order.
+    #! beware: index changes upon popping!  
+        rm_list.reverse()   
+        for rm_index in rm_list:
+            _list.pop(rm_index)
+            _list.pop(rm_index-1)
             
     return None
 
@@ -102,7 +105,7 @@ def clean_connectivity(data, search_term="0.100"):
     """modifies the connectivity data. removes partial connectivity
 
     Args:
-        data (nested list): extracted list of connectivity data (from *.EIn)
+        data (nested list: 2D): extracted list of connectivity data (from *.EIn)
         search_term (str, optional): partial connectivity value. Defaults to "0.100".
 
     Returns:
