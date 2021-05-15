@@ -143,3 +143,4 @@ examples/
 tests/
 .vscode/
 *.code-workspace
+documentation/
