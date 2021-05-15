@@ -66,6 +66,8 @@ def clean_ein(data):
     except ValueError as error:
         print(">Error in Gaussian .EIn file")
         print(f"in line: {line}")
+        
+        # try to rebuild EIn if coordinates are present
         abnormal_termination()        
 
     # extract connectivity
