@@ -187,8 +187,8 @@ def write_txyz(n_atoms, coordinates, connectivity, periodic_table, atom_types):
                 column7 = " ".join(map(str, connectivity[idx][1::2]))
             
             except KeyError as kerr:
-                print(f">ERROR: check .EIn file! can't find atomic number {coordinates[idx][0]} in Periodictable.py")
-                print(f"or atomtype {coordinates[idx][5]} in MM force field file")
+                print(f">ERROR: check input file! can't find atomtype {coordinates[idx][5]} in MM force field file")
+                print(f"or atomic number {coordinates[idx][0]} in Periodictable.py")
                 abnormal_termination()
 
             row = " {:d} {:3} {:14.8f} {:14.8f} {:14.8f} {:4}  {} \n".format(
@@ -224,6 +224,19 @@ def sh(command, timeout=120):
         process.terminate()
         abnormal_termination()
 
+def get_system_variable(var_name):
+    """Get system variables defined in the Shell. 
+    e.g. Gaussian scratch path.
+
+    Args:
+        var_name (str): shell variable name
+    """
+    try:
+        var_value = os.environ[var_name]
+    except:
+        print(f">Error: Can't find ${var_name} system variable!")
+        abnormal_termination()
+    return var_value
 
 def execute_tinker(command, out_file):
     """(str -> NONE)
@@ -255,7 +268,6 @@ def execute_tinker(command, out_file):
         print("probable reason: Tinker might not be able to find forcefield parameters. Check")
         print(" - *.key file")
         print(" - atomtypes.dat")
-        process.terminate()
         abnormal_termination()
 
 
@@ -269,7 +281,7 @@ def read_keyfile(file_name):
     param_path   = ""
     fix_ein_path = ""
     tinker_path  = ""
-    g16_scratch  = "./"
+    g16_scratch  = get_system_variable("GAUSS_SCRDIR")
     
     
     # check if input.key is available if not terminate
