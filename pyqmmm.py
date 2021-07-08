@@ -69,7 +69,6 @@ fio.write_gauEou(g16_scratch=g16_scratch, eOu_setting=eOu_setting, filename=gaus
                  gaussian_hessian=ghes)
 
 
-
 # 6. remove temporary files and the EIn file
 files_to_remove = ["*.EIn", "*.Ein", "*.ein", "*.epout", "*.gout", "*.hes", "*.hesout", "*.xyz"]
 

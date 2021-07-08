@@ -253,8 +253,8 @@ def execute_tinker(command, out_file):
             process_status = process.wait()
     except OSError as error:
         print(">ERROR in Tinker calculation")
-        print("can't find executables. Add then in to PATH or specify in the .key file ")
-        print("to identify the problem")
+        print("can't find executables. Add Tinker executables into the $PATH")
+        print("or specify path to Tinker folder inside input.key using \"tinker_path\" keyword.")
         abnormal_termination()
         
     except ValueError as error:
