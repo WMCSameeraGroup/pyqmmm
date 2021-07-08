@@ -144,4 +144,5 @@ tests/
 .vscode/
 *.code-workspace
 documentation/
+fixes/
 .DS_Store

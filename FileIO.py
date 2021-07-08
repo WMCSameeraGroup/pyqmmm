@@ -1,6 +1,4 @@
 import sys, os, shlex, subprocess, glob
-import re 
-# import itertools
 
 SCRIPT_PATH = os.path.dirname(__file__)
 TINKER_TIMEOUT = float(500)  # ? increase this later?
@@ -102,6 +100,7 @@ def pop_item(search_term, _list):
             _list.pop(rm_index-1)
             
     return None
+
 
 def clean_connectivity(data, search_term="0.100"):
     """modifies the connectivity data. removes partial connectivity
@@ -224,6 +223,7 @@ def sh(command, timeout=120):
         process.terminate()
         abnormal_termination()
 
+
 def get_system_variable(var_name):
     """Get system variables defined in the Shell. 
     e.g. Gaussian scratch path.
@@ -237,6 +237,7 @@ def get_system_variable(var_name):
         print(f">Error: Can't find ${var_name} system variable!")
         abnormal_termination()
     return var_value
+
 
 def execute_tinker(command, out_file):
     """(str -> NONE)
@@ -466,34 +467,6 @@ def remove_files(files, location):
     # print(f"{len(rm_files_list)} File(s) removed from {location}")
 
 
-
-def check_tinker_executables():
-    """
-    # TODO: Check if Tinker executables are in the $PATH
-    """
-    pass
-
-
-# def extract_forcefield():
-#     """(str -> str)
-#     Extract force field from the key file.
-#     """
-#     key_file = glob.glob("*.key")
-#     if len(key_file) > 1:
-#         print(f"WARNING: Multiple *.key files are present. {key_file[0]} selected!")
-#     keyfile_data = read_file(key_file[0])
-
-#     try:
-#         for line in keyfile_data:
-#             if line.startswith("parameters"):
-#                 forcefield_path = line.split()[1]
-#         return(forcefield_path)
-#     except:
-#         print("ERROR: Force field path is not defined in the Tinker *.key file")
-#         print("Terminating...")
-#         abnormal_termination()
-
-
 def extract_hessian(filename):
     """(text file -> list)
     Extracts hessian from tinker output as it is.    
@@ -662,3 +635,4 @@ def write_gauEou(g16_scratch, eOu_setting, filename, natoms, energy, dipole, gra
             while count < len(gaussian_hessian):
                 fout.write(f"{gaussian_hessian[count]}{gaussian_hessian[count+1]}{gaussian_hessian[count+2]} \n")
                 count += 3
+
