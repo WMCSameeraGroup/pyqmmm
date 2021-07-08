@@ -4,7 +4,7 @@ import sys, os, copy
 import FileIO as fio
 from Periodictable import periodic_table
 
-print("pyQMMM: Recovering MM data...")
+print("pyQMMM: Running...")
 
 # 1. prepare the environment
 # get system variables
@@ -35,7 +35,6 @@ fio.clean_connectivity(connectivity_cleaned)
 
 # 3. generate tinker file
 # print(">Generating Tinker file ...")
-# periodic_table = fio.create_periodic_table(f"{script_path}/periodic_table.dat")   
 atom_types = fio.read_atom_types(f"{cwd}/atomtypes.dat")
 
 fio.write_txyz(n_atoms, coordinates, connectivity_cleaned, periodic_table=periodic_table, atom_types=atom_types)
@@ -69,7 +68,6 @@ fio.write_gauEou(g16_scratch=g16_scratch, eOu_setting=eOu_setting, filename=gaus
                  gradients=gradients, dipole_derivatives=dderivatives, 
                  gaussian_hessian=ghes)
 
-# print("pyQMMM: Data recovery completed!")
 
 
 # 6. remove temporary files and the EIn file
@@ -79,3 +77,4 @@ files_to_remove = ["*.EIn", "*.Ein", "*.ein", "*.epout", "*.gout", "*.hes", "*.h
 fio.remove_files(location=g16_scratch, files=files_to_remove)
 fio.remove_files(location=cwd, files=files_to_remove)
 
+print("pyQMMM: Data recovery completed!")
