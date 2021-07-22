@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
 import sys, os, copy
-import FileIO as fio
-from Periodictable import periodic_table
+import utils.FileIO as fio
+from utils.Periodictable import periodic_table
 
 print("pyQMMM: Running...")
 
@@ -37,7 +37,8 @@ fio.clean_connectivity(connectivity_cleaned)
 # print(">Generating Tinker file ...")
 atom_types = fio.read_atom_types(f"{cwd}/atomtypes.dat")
 
-fio.write_txyz(n_atoms, coordinates, connectivity_cleaned, periodic_table=periodic_table, atom_types=atom_types)
+fio.write_txyz(n_atoms, coordinates, connectivity_cleaned, 
+               periodic_table=periodic_table, atom_types=atom_types)
 
 
 # 4. run tinker
@@ -64,7 +65,8 @@ if eOu_setting == 2:
     index_list = fio.create_indexes(matrix)
     ghes = fio.rearrange_hessian(index_list, tinker_hessian)
     
-fio.write_gauEou(g16_scratch=g16_scratch, eOu_setting=eOu_setting, filename=gaussian_ein[:-4], natoms=n_atoms, energy=energy, dipole=dipole, 
+fio.write_gauEou(g16_scratch=g16_scratch, eOu_setting=eOu_setting, filename=gaussian_ein[:-4], 
+                 natoms=n_atoms, energy=energy, dipole=dipole, 
                  gradients=gradients, dipole_derivatives=dderivatives, 
                  gaussian_hessian=ghes)
 
