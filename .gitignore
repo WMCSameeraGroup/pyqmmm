@@ -139,10 +139,8 @@ dmypy.json
 cython_debug/
 
 # This workspace
-examples/
 tests/
 .vscode/
 *.code-workspace
-documentation/
 fixes/
 .DS_Store
