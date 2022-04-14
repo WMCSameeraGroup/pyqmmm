@@ -7,7 +7,7 @@ Python interface for subtractive QM/MM calculations with AMOEBA polarizable forc
 
 ## Installation
 
-Download the program code from <https://github.com/madhurangar/pyqmmm> and extract it. (we assume that you have extracted to " `~/`")
+Download the program code from <https://github.com/WMCSameeraGroup/pyqmmm> and extract it. (we assume that you have extracted to " `~/`")
 
 ```bash
 cd ~/pyqmmm
