@@ -18,37 +18,34 @@ chmod +x pyqmmm.py
 
 ## Example Calculation
 
-pyQMMM requires 3 input files and the parameter file for Tinker. 
+PyQM/MM requires three input files and the parameter file for Tinker. 
 
-1. `*.com`: Gaussian input file
-2. `input.key`: Tinker keywords file 
-3. `atomtypes.dat`: stores Gaussian and Tinker atomtypes
+1. `*.com`: Gaussian input file.
+2. `input.key`: Tinker keywords file. 
+3. `atomtypes.dat`: stores Gaussian and Tinker atom types.
 
 ### Gaussian16 input
-Gaussian uses `external` keyword to execute third party programs in ONIOM calculations. 
+Gaussian uses the `external` keyword to execute external programs for ONIOM(QM:MM) calculations. 
 
 ```bash
 #p opt(cartesian,maxcyc=100,nomicro) freq=noraman nosymm oniom(wb97xd/6-31G*:external="/home/user/pyqmmmm/pyqmmm.py") geom=connectivity
 ```
 
 ### `input.key` 
-Tinker reads  `input.key` prior to the calculation to locate parameter file and necessary MM calculation details. The potential energy calculation however needs only the parameter file. Additionally, two optional keywords for pyQMMM (`g16_scratch` and `tinker_path`) can be also defined here. 
+Tinker reads  `input.key` to locate the MM parameter file of Tinker (e.g. amoeba09.prm). Also, `g16_scratch` and `tinker_path` would be defined. 
 
 ```bash
 parameters /path/to/parameters/amoeba09.prm
 
-# Optional keywords for pyQMMM
-#-----------------------------
+# Define `g16_scratch` and `tinker_path`.
+#----------------------------------------
 g16_scratch /path/to/scratch/scr-water
 tinker_path /home/useer/apps/tinker
 ```
 
-- `g16_scratch`: pyQMMM automatically reads `$GAUSS_SCRDIR` from the system. Users can manually override by specifying it here.
-- `tinker_path`: If Tinker executables are not in the system path, users can  specify Tinker binaries folder here. 
-
 ### `atomtypes.dat` 
 
-Tinker needs correct atomtypes to calculate MM potential energy . Therefore, Gaussian atoms/atomtypes must be converted to corresponding Tinker atomtypes. `atomtypes.dat` contains both these atomtypes, atomic numbers,elements and atom descriptions.
+Tinker program needs MM atom types to calculate MM potential energy and derivatives. Therefore, Gaussian16 atom types must be converted to the corresponding Tinker atom types. The `atomtypes.dat` file contains both Gaussian16 and Tinker atom types.
 
 ```bash
 # file: atomtypes.dat
@@ -57,7 +54,7 @@ Tinker needs correct atomtypes to calculate MM potential energy . Therefore, Gau
   1           H         HW            37                "Water H"
 ```
 
-For instance, oxygen in water molecule is identified as atomtype `36` in amoeba09 force field and as `OW` in Gaussian.
+For instance, oxygen in water molecule is identified as `OW` in Gaussian16 and atomtype `36` in amoeba09 force field.
 
 ```bash
 # file: waterbox.com
@@ -76,7 +73,9 @@ atom         37   35    H     "Water H"            1     1.008    1
 ...
 ```
 
-Once you have prepared these files, you will be able to run this calculation as a usual Gaussian job.
+Then, Gaussian16 calculation can be submitted. 
+
+Submission script:
 
 ```bash
 # file: run.csh
