@@ -3,7 +3,8 @@ PyQMMM
 
 <!-- <img src="figs/PyQMMM.png" alt="drawing" width="400"/> -->
 
-Python interface for subtractive QM/MM calculations with AMOEBA polarizable force field (PyQMMM) acts as an interface between Gaussian and Tinker. It does not require third party Python packages, therefore, works with the default Python installation in the system (version 3.6 or higher).  Once Gaussian executes the external molecular mechanics software by keyword `external`,  PyQMMM converts the Gaussian input data (`*.EIn`) in to Tinker compatible inputs (`*.xyz`) and then executes the Tinker calculation. Finally, the MM data (`*.epout`, `*.gout`, `*.hes`) is recovered to construct Gaussian compatible data source (`*.EOu`) to continue the QM/MM calculation in Gaussian. Incorporation of Tinker tools enables users to utilise a wide range of MM force fields such as MM3, OPLS, CHARMM, AMBER and AMOEBA. 
+Python interface for subtractive QM/MM calculations with AMOEBA polarizable force field (PyQM/MM) interfaces between Gaussian16 and Tinker programs. PyQM/MM does not require third-party Python packages and therefore works with the default Python installation in the system (version 3.6 or higher).  
+Once Gaussian executes an ONIOM(QM:MM) calculation with the keyword `external`,  PyQM/MM converts the Gaussian16 input data (`*.EIn`) into Tinker compatible inputs (`*.xyz`) and then executes the Tinker calculation. Then, the MM data (`*.epout`, `*.gout`, `*.hes`) is recovered to construct a Gaussian16 compatible data source file (`*.EOu`) to continue the ONIOM(QM:MM) calculation. The incorporation of Tinker tools enables users to use a wide range of MM force fields such as AMOEBA, MMFF, MM3, OPLS, CHARMM, AMBER, etc. 
 
 ## Installation
 
