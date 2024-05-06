@@ -609,30 +609,30 @@ def write_gauEou(g16_scratch, eOu_setting, filename, natoms, energy, dipole, gra
         
         if eOu_setting >= 0:
             # 1. energy, dipole-moment (xyz)
-            fout.write("{:20.12e}{:20.12e}{:20.12e}{:20.12e} \n".format(energy, dipole[0], dipole[1], dipole[2]))
+            fout.write("{:20.12e} {:20.12e} {:20.12e} {:20.12e} \n".format(energy, dipole[0], dipole[1], dipole[2]))
         
         if eOu_setting >= 1:
             # 2. gradient on atom (xyz)
             for line in gradients:
-                fout.write("{:20.12e}{:20.12e}{:20.12e} \n".format(line[0], line[1], line[2]))
+                fout.write("{:20.12e} {:20.12e} {:20.12e} \n".format(line[0], line[1], line[2]))
                   
         if eOu_setting == 2:    
             # 3. polarizability
             # ! hard coded to 0
             pol = 0.0
-            fout.write("{:20.12e}{:20.12e}{:20.12e} \n".format(pol, pol, pol))
-            fout.write("{:20.12e}{:20.12e}{:20.12e} \n".format(pol, pol, pol))  
+            fout.write("{:20.12e} {:20.12e} {:20.12e} \n".format(pol, pol, pol))
+            fout.write("{:20.12e} {:20.12e} {:20.12e} \n".format(pol, pol, pol))  
                 
             # 4. dipole derivatives
             # ! hard coded to 0
             count = 0
             while count < len(dipole_derivatives):
-                fout.write(f"{dipole_derivatives[count]}{dipole_derivatives[count+1]}{dipole_derivatives[count+2]} \n")
+                fout.write(f"{dipole_derivatives[count]} {dipole_derivatives[count+1]} {dipole_derivatives[count+2]} \n")
                 count += 3   
                 
             # 5. hessian
             count = 0
             while count < len(gaussian_hessian):
-                fout.write(f"{gaussian_hessian[count]}{gaussian_hessian[count+1]}{gaussian_hessian[count+2]} \n")
+                fout.write(f"{gaussian_hessian[count]} {gaussian_hessian[count+1]} {gaussian_hessian[count+2]} \n")
                 count += 3
 
