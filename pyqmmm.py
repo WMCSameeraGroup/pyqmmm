@@ -12,7 +12,7 @@ script_path = os.path.dirname(sys.argv[0])
 cwd = os.getcwd()
 
 # read input.key file
-param_path, fix_ein_path, g16_scratch, tinker_path = fio.read_keyfile("input.key")
+param_path, fix_ein_path, g16_scratch, tinker_path, tinker_bounds = fio.read_keyfile("input.key")
 
 # find *.EIn file (default g16_scratch=./)
 gaussian_ein = fio.getEin_file(ein_location=g16_scratch)
@@ -65,7 +65,9 @@ if eOu_setting == 2:
     index_list = fio.create_indexes(matrix)
     ghes = fio.rearrange_hessian(index_list, tinker_hessian)
     
-fio.write_gauEou(g16_scratch=g16_scratch, eOu_setting=eOu_setting, filename=gaussian_ein[:-4], 
+fio.write_gauEou(g16_scratch=g16_scratch, eOu_setting=eOu_setting, 
+                 tinker_bounds=tinker_bounds, 
+                 filename=gaussian_ein[:-4], 
                  natoms=n_atoms, energy=energy, dipole=dipole, 
                  gradients=gradients, dipole_derivatives=dderivatives, 
                  gaussian_hessian=ghes)

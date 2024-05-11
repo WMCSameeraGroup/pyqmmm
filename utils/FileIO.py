@@ -283,6 +283,7 @@ def read_keyfile(file_name):
     fix_ein_path = ""
     tinker_path  = ""
     g16_scratch  = get_system_variable("GAUSS_SCRDIR")
+    tinker_bounds = False
     
     
     # check if input.key is available if not terminate
@@ -302,9 +303,11 @@ def read_keyfile(file_name):
                 g16_scratch = f"{line_split[1]}/"
             if line_split[0].lower() == "tinker_path":
                 tinker_path = f"{line_split[1]}/"
+            if line_split[0].lower() == "tinker_bounds":
+                tinker_bounds = f"{line_split[1]}/"
         except:
             pass        
-    return(param_path, fix_ein_path, g16_scratch, tinker_path)
+    return(param_path, fix_ein_path, g16_scratch, tinker_path, tinker_bounds)
 
 
 def run_tinker(eOu_setting, filename="input", tinker_path=""):
@@ -467,6 +470,16 @@ def remove_files(files, location):
     # print(f"{len(rm_files_list)} File(s) removed from {location}")
 
 
+def set_bound(lst, upper_lim=99999, lower_lim=-99999):
+    new_lst = []
+    for item in lst:
+        if isinstance(item, list):
+            new_lst.append(set_bound(item, upper_lim, lower_lim))
+        else:
+            new_lst.append(upper_lim if item > upper_lim else (lower_lim if item < lower_lim else item))
+    return new_lst
+
+
 def extract_hessian(filename):
     """(text file -> list)
     Extracts hessian from tinker output as it is.    
@@ -585,7 +598,7 @@ def extract_dipole_derivatives(natoms):
     return(dderivatives)
 
 
-def write_gauEou(g16_scratch, eOu_setting, filename, natoms, energy, dipole, gradients, gaussian_hessian, dipole_derivatives):
+def write_gauEou(g16_scratch, eOu_setting, tinker_bounds, filename, natoms, energy, dipole, gradients, gaussian_hessian, dipole_derivatives):
     """(str, int, str, float, list, nested list -> NONE)
     remove old *.EOu files and 
     write new gaussian *.EOu file in the working/scratch directory 
@@ -601,6 +614,11 @@ def write_gauEou(g16_scratch, eOu_setting, filename, natoms, energy, dipole, gra
     """
     # remove existing *.Eou files
     remove_files(location=g16_scratch, files=["*.EOu"])
+    
+    if tinker_bounds.lower() == 'true':
+        gradients = set_bound(gradients)
+        gaussian_hessian = set_bound(gaussian_hessian)
+        
     
     # write new *.EOu file
     with open(f"{filename}.EOu", "w") as fout:
