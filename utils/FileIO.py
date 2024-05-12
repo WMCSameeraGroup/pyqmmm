@@ -573,9 +573,9 @@ def rearrange_hessian(index_list, tinker_hessian):
         b = element[1]
         temp_hes = tinker_hessian[a][b] 
         temp_hes = float(temp_hes) * KCALPERMOLANG22HARTREEBHOR2
-        # gaussian_hessian.append("{: 20.12e}".format(temp_hes))
+        gaussian_hessian.append(temp_hes)
         # print(temp_hes)
-    return(temp_hes)
+    return(gaussian_hessian)
 
 
 def extract_polarizability():
