@@ -283,7 +283,7 @@ def read_keyfile(file_name):
     fix_ein_path = ""
     tinker_path  = ""
     g16_scratch  = get_system_variable("GAUSS_SCRDIR")
-    tinker_bounds = False
+    tinker_bounds = "False"
     
     
     # check if input.key is available if not terminate
@@ -573,9 +573,9 @@ def rearrange_hessian(index_list, tinker_hessian):
         b = element[1]
         temp_hes = tinker_hessian[a][b] 
         temp_hes = float(temp_hes) * KCALPERMOLANG22HARTREEBHOR2
-        gaussian_hessian.append("{: 20.12e}".format(temp_hes))
+        # gaussian_hessian.append("{: 20.12e}".format(temp_hes))
         # print(temp_hes)
-    return(gaussian_hessian)
+    return(temp_hes)
 
 
 def extract_polarizability():
@@ -594,7 +594,7 @@ def extract_dipole_derivatives(natoms):
     Args:
         natoms (int): number of atoms in the system
     """
-    dderivatives = ["{: 20.12e}".format(0)] * 9 * natoms
+    dderivatives = [0] * 9 * natoms
     return(dderivatives)
 
 
@@ -638,19 +638,19 @@ def write_gauEou(g16_scratch, eOu_setting, tinker_bounds, filename, natoms, ener
             # 3. polarizability
             # ! hard coded to 0
             pol = 0.0
-            fout.write("{: 20.12e}{: 20.12e}{: 20.12e}\n".format(pol, pol, pol))
-            fout.write("{: 20.12e}{: 20.12e}{: 20.12e}\n".format(pol, pol, pol))  
+            fout.write(f"{pol: 20.12e}{pol: 20.12e}{pol: 20.12e}\n")
+            fout.write(f"{pol: 20.12e}{pol: 20.12e}{pol: 20.12e}\n")  
                 
             # 4. dipole derivatives
             # ! hard coded to 0
             count = 0
             while count < len(dipole_derivatives):
-                fout.write(f"{dipole_derivatives[count]}{dipole_derivatives[count+1]}{dipole_derivatives[count+2]}\n")
+                fout.write(f"{dipole_derivatives[count]: 20.12e}{dipole_derivatives[count+1]: 20.12e}{dipole_derivatives[count+2]: 20.12e}\n")
                 count += 3   
                 
             # 5. hessian
             count = 0
             while count < len(gaussian_hessian):
-                fout.write(f"{gaussian_hessian[count]}{gaussian_hessian[count+1]}{gaussian_hessian[count+2]}\n")
+                fout.write(f"{gaussian_hessian[count]: 20.12e}{gaussian_hessian[count+1]: 20.12e}{gaussian_hessian[count+2]: 20.12e}\n")
                 count += 3
 
